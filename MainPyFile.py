@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 
-array = np.array([1,2,3])
+array = np.array([[1,2,3],[77,78,79]])
 print (array)
 
-array_2 = np.append(array,[77])
+array_2 = np.append(array,[77,90,99])
 print (array_2,'shape',np.shape(array_2))
  
 array_3 = np.random.randint(4)
