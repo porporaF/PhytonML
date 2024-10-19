@@ -16,9 +16,8 @@ array_4=array_2*array_3
 print('Matrice:',array_4)
 import csv
 csv_filename='eggs.csv'
-with open(csv_filename, 'r') as fp:
-    reader = csv.reader(fp)
-    data = list(reader)
-#array_data = np.array(data)
+df = pd.read_csv(csv_filename)
+#array8data
 
-print(data)
+print (df)
+print (df["data"].mean())
