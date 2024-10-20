@@ -8,5 +8,6 @@ def CsvToDf (file_path):
 
 path='eggs.csv'
 dataC = CsvToDf(path)
-print (dataC)
+
+
 
