@@ -32,6 +32,18 @@ file_name="laptops.csv"
 df = pd.read_csv(file_name, header=0)   #crea dataset
 print(df)
 
+#isoliamo le colonne numeriche
+
+numerical_columns = [col for col in df.columns if df[col].dtype \
+    in ["int64", "float64"]]
+print(numerical_columns)
+#Heat map
+
+df2 =df.select_dtypes(["int64", "float64"])
+print(df2)
+
+df2.corr()
+sns.heatmap(df2.corr())
 #Crea linear Regression 
 lm = LinearRegression()
 X=df[['CPU_frequency']]
@@ -41,7 +53,7 @@ Y=df['Price']
 plt.scatter(X,Y)
 plt.xlabel("CPU_Frequency")
 plt.ylabel("Price")
-plt.show()
+#plt.show()
 
 lm.fit(X,Y)
 Yhat=lm.predict(X)
@@ -68,6 +80,29 @@ lm2.fit(Z,Y)
 Yhat=lm2.predict(Z)
 print(lm2.coef_)
 print(lm2.intercept_)
+print('R2_2param',r2_score(Y,Yhat))
+
+ax1 = sns.distplot(df['Price'], hist=False, color="r", label="Actual Value")
+
+# Create a distribution plot for predicted values
+sns.distplot(Yhat, hist=False, color="b", label="Fitted Values" , ax=ax1)
+
+plt.title('Actual vs Fitted Values for Price')
+plt.xlabel('Price')
+plt.ylabel('Proportion of laptops')
+plt.legend(['Actual Value', 'Predicted Value'])
+plt.show()
+
+# Regressione a 3 parametri
+lm2 = LinearRegression()
+Z=df[['Screen-Full_HD','Screen-IPS_panel','Weight_pounds']]
+Y=df['Price']
+
+lm2.fit(Z,Y)
+Yhat=lm2.predict(Z)
+print(lm2.coef_)
+print(lm2.intercept_)
+print('R2_3param',r2_score(Y,Yhat))
 
 ax1 = sns.distplot(df['Price'], hist=False, color="r", label="Actual Value")
 
@@ -103,13 +138,15 @@ def PlotPolly(model, independent_variable, dependent_variabble, Name):
     plt.ylabel('Price of laptops')
    
 PlotPolly(p1, X, Y, 'CPU_frequency')
-plt.show()
+
 PlotPolly(p3, X, Y, 'CPU_frequency')
-plt.show()
+
 PlotPolly(p5, X, Y, 'CPU_frequency')
-plt.show()
 
-print (p5.coef)
+Yhat=p1(X)
+print('R2 score p1',r2_score(Y,Yhat))
+Yhat=p3(X)
+print('R2 score p3',r2_score(Y,Yhat))
+Yhat=p5(X)
+print('R2 score p5',r2_score(Y,Yhat))
 
-a=polyval(1,p5.coef)
-print('a=',a)
